@@ -17,4 +17,6 @@ public class Constants {
 
     // Amount of extra lives at level start
     public static final int LIVES_START = 3;
+    public static final float ITEM_FEATHER_POWERUP_DURATION = 9;
+    public static final float TIME_DELAY_GAME_OVER = 3;
 }
