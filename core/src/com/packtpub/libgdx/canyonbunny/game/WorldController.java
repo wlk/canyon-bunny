@@ -1,6 +1,7 @@
 package com.packtpub.libgdx.canyonbunny.game;
 
 import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
@@ -10,6 +11,7 @@ import com.packtpub.libgdx.canyonbunny.game.objects.BunnyHead;
 import com.packtpub.libgdx.canyonbunny.game.objects.Feather;
 import com.packtpub.libgdx.canyonbunny.game.objects.GoldCoin;
 import com.packtpub.libgdx.canyonbunny.game.objects.Rock;
+import com.packtpub.libgdx.canyonbunny.screens.MenuScreen;
 import com.packtpub.libgdx.canyonbunny.util.CameraHelper;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
 
@@ -23,8 +25,10 @@ public class WorldController extends InputAdapter {
     // Rectangles for collision detection
     private Rectangle r1 = new Rectangle();
     private Rectangle r2 = new Rectangle();
+    private Game game;
 
-    public WorldController() {
+    public WorldController(Game game) {
+        this.game = game;
         init();
     }
 
@@ -46,7 +50,7 @@ public class WorldController extends InputAdapter {
         handleDebugInput(deltaTime);
         if (isGameOver()) {
             timeLeftGameOverDelay -= deltaTime;
-            if (timeLeftGameOverDelay < 0) init();
+            if (timeLeftGameOverDelay < 0) backToMenu();
         } else {
             handleInputGame(deltaTime);
         }
@@ -64,6 +68,11 @@ public class WorldController extends InputAdapter {
 
     public boolean isGameOver() {
         return lives < 0;
+    }
+
+    private void backToMenu () {
+        // switch to menu screen
+        game.setScreen(new MenuScreen(game));
     }
 
     public boolean isPlayerInWater() {
@@ -134,7 +143,10 @@ public class WorldController extends InputAdapter {
             cameraHelper.setTarget(cameraHelper.hasTarget() ? null : level.bunnyHead);
             Gdx.app.debug(TAG, "Camera follow enabled: " + cameraHelper.hasTarget());
         }
-
+        // Back to  Menu
+        else if (keycode == Input.Keys.ESCAPE || keycode == Input.Keys.BACK) {
+            backToMenu();
+        }
         return false;
     }
 
