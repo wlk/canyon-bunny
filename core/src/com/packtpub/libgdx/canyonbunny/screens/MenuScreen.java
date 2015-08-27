@@ -214,8 +214,8 @@ public class MenuScreen extends AbstractGameScreen {
         if (Gdx.app.getType() == ApplicationType.WebGL) {
             Array<CharacterSkin> items = new Array<CharacterSkin>();
             CharacterSkin[] arr = CharacterSkin.values();
-            for (int i = 0; i < arr.length; i++) {
-                items.add(arr[i]);
+            for (CharacterSkin anArr : arr) {
+                items.add(anArr);
             }
             selCharSkin.setItems(items);
         } else {
@@ -253,7 +253,7 @@ public class MenuScreen extends AbstractGameScreen {
     private Table buildOptWinButtons() {
         Table tbl = new Table();
         // + Separator
-        Label lbl = null;
+        Label lbl;
         lbl = new Label("", skinLibgdx);
         lbl.setColor(0.75f, 0.75f, 0.75f, 1);
         lbl.setStyle(new Label.LabelStyle(lbl.getStyle()));
