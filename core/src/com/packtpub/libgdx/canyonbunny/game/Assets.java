@@ -4,14 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.utils.Disposable;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 
 public class Assets implements Disposable, AssetErrorListener {
     public static final String TAG = Assets.class.getName();
@@ -22,9 +22,9 @@ public class Assets implements Disposable, AssetErrorListener {
     public AssetFeather feather;
     public AssetLevelDecoration levelDecoration;
     public AssetFonts fonts;
-    private AssetManager assetManager;
     public AssetSounds sounds;
     public AssetMusic music;
+    private AssetManager assetManager;
 
     // singleton: prevent instantiation from other classes
     private Assets() {
@@ -90,7 +90,8 @@ public class Assets implements Disposable, AssetErrorListener {
         public final Sound pickupCoin;
         public final Sound pickupFeather;
         public final Sound liveLost;
-        public AssetSounds (AssetManager am) {
+
+        public AssetSounds(AssetManager am) {
             jump = am.get("sounds/jump.wav", Sound.class);
             jumpWithFeather = am.get("sounds/jump_with_feather.wav", Sound.class);
             pickupCoin = am.get("sounds/pickup_coin.wav", Sound.class);
@@ -98,9 +99,11 @@ public class Assets implements Disposable, AssetErrorListener {
             liveLost = am.get("sounds/live_lost.wav", Sound.class);
         }
     }
+
     public class AssetMusic {
         public final Music song01;
-        public AssetMusic (AssetManager am) {
+
+        public AssetMusic(AssetManager am) {
             song01 = am.get("music/keith303_-_brand_new_highscore.mp3", Music.class);
         }
     }
@@ -133,6 +136,8 @@ public class Assets implements Disposable, AssetErrorListener {
         public final AtlasRegion mountainLeft;
         public final AtlasRegion mountainRight;
         public final AtlasRegion waterOverlay;
+        public final AtlasRegion carrot;
+        public final AtlasRegion goal;
 
         public AssetLevelDecoration(TextureAtlas atlas) {
             cloud01 = atlas.findRegion("cloud01");
@@ -141,6 +146,8 @@ public class Assets implements Disposable, AssetErrorListener {
             mountainLeft = atlas.findRegion("mountain_left");
             mountainRight = atlas.findRegion("mountain_right");
             waterOverlay = atlas.findRegion("water_overlay");
+            carrot = atlas.findRegion("carrot");
+            goal = atlas.findRegion("goal");
         }
     }
 

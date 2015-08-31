@@ -5,16 +5,19 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
 
 public class WorldRenderer implements Disposable {
+    private static final boolean DEBUG_DRAW_BOX2D_WORLD = false;
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private WorldController worldController;
     private OrthographicCamera cameraGUI;
+    private Box2DDebugRenderer b2debugRenderer;
 
     public WorldRenderer(WorldController worldController) {
         this.worldController = worldController;
@@ -28,8 +31,10 @@ public class WorldRenderer implements Disposable {
         camera.update();
         cameraGUI = new OrthographicCamera(Constants.VIEWPORT_GUI_WIDTH, Constants.VIEWPORT_GUI_HEIGHT);
         cameraGUI.position.set(0, 0, 0);
-        cameraGUI.setToOrtho(true); // flip y-axis
+        cameraGUI.setToOrtho(true);
+        // flip y-axis
         cameraGUI.update();
+        b2debugRenderer = new Box2DDebugRenderer();
     }
 
     public void render() {
@@ -43,6 +48,9 @@ public class WorldRenderer implements Disposable {
         batch.begin();
         worldController.level.render(batch);
         batch.end();
+        if (DEBUG_DRAW_BOX2D_WORLD) {
+            b2debugRenderer.render(worldController.b2world, camera.combined);
+        }
     }
 
     private void renderGui(SpriteBatch batch) {
