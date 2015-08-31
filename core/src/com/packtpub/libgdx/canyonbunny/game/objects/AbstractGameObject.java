@@ -40,7 +40,7 @@ public abstract class AbstractGameObject {
 
     public abstract void render(SpriteBatch batch);
 
-    protected void updateMotionX (float deltaTime) {
+    protected void updateMotionX(float deltaTime) {
         if (velocity.x != 0) {
             // Apply friction
             if (velocity.x > 0) {
@@ -57,7 +57,8 @@ public abstract class AbstractGameObject {
         // positive or negative terminal velocity
         velocity.x = MathUtils.clamp(velocity.x, -terminalVelocity.x, terminalVelocity.x);
     }
-    protected void updateMotionY (float deltaTime) {
+
+    protected void updateMotionY(float deltaTime) {
         if (velocity.y != 0) {
             // Apply friction
             if (velocity.y > 0) {
@@ -70,6 +71,6 @@ public abstract class AbstractGameObject {
         velocity.y += acceleration.y * deltaTime;
         // Make sure the object's velocity does not exceed the
         // positive or negative terminal velocity
-        velocity.y = MathUtils.clamp(velocity.y, - terminalVelocity.y, terminalVelocity.y);
+        velocity.y = MathUtils.clamp(velocity.y, -terminalVelocity.y, terminalVelocity.y);
     }
 }

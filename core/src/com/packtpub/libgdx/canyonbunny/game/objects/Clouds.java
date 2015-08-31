@@ -13,38 +13,6 @@ public class Clouds extends AbstractGameObject {
     private Array<TextureRegion> regClouds;
     private Array<Cloud> clouds;
 
-    private class Cloud extends AbstractGameObject {
-        private TextureRegion regCloud;
-
-        public Cloud() {
-        }
-
-        public void setRegion(TextureRegion region) {
-            regCloud = region;
-        }
-
-        @Override
-        public void render(SpriteBatch batch) {
-            TextureRegion reg = regCloud;
-            batch.draw(reg.getTexture(),
-                    position.x + origin.x,
-                    position.y + origin.y,
-                    origin.x,
-                    origin.y,
-                    dimension.x,
-                    dimension.y,
-                    scale.x,
-                    scale.y,
-                    rotation,
-                    reg.getRegionX(),
-                    reg.getRegionY(),
-                    reg.getRegionWidth(),
-                    reg.getRegionHeight(),
-                    false,
-                    false);
-        }
-    }
-
     public Clouds(float length) {
         this.length = length;
         init();
@@ -95,16 +63,48 @@ public class Clouds extends AbstractGameObject {
     }
 
     @Override
-    public void update (float deltaTime) {
-        for (int i = clouds.size - 1; i>= 0; i--) {
+    public void update(float deltaTime) {
+        for (int i = clouds.size - 1; i >= 0; i--) {
             Cloud cloud = clouds.get(i);
             cloud.update(deltaTime);
-            if (cloud.position.x< -10) {
-            // cloud moved outside of world.
-            // destroy and spawn new cloud at end of level.
+            if (cloud.position.x < -10) {
+                // cloud moved outside of world.
+                // destroy and spawn new cloud at end of level.
                 clouds.removeIndex(i);
                 clouds.add(spawnCloud());
             }
+        }
+    }
+
+    private class Cloud extends AbstractGameObject {
+        private TextureRegion regCloud;
+
+        public Cloud() {
+        }
+
+        public void setRegion(TextureRegion region) {
+            regCloud = region;
+        }
+
+        @Override
+        public void render(SpriteBatch batch) {
+            TextureRegion reg = regCloud;
+            batch.draw(reg.getTexture(),
+                    position.x + origin.x,
+                    position.y + origin.y,
+                    origin.x,
+                    origin.y,
+                    dimension.x,
+                    dimension.y,
+                    scale.x,
+                    scale.y,
+                    rotation,
+                    reg.getRegionX(),
+                    reg.getRegionY(),
+                    reg.getRegionWidth(),
+                    reg.getRegionHeight(),
+                    false,
+                    false);
         }
     }
 }

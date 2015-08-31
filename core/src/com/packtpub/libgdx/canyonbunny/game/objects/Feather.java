@@ -5,21 +5,22 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.packtpub.libgdx.canyonbunny.game.Assets;
 
 public class Feather extends AbstractGameObject {
-    private TextureRegion regFeather;
     public boolean collected;
+    private TextureRegion regFeather;
 
-    public Feather () {
+    public Feather() {
         init();
     }
 
-    private void init () {
+    private void init() {
         dimension.set(0.5f, 0.5f);
         regFeather = Assets.instance.feather.feather;
         // Set bounding box for collision detection
         bounds.set(0, 0, dimension.x, dimension.y);
         collected = false;
     }
-    public void render (SpriteBatch batch) {
+
+    public void render(SpriteBatch batch) {
         if (collected) return;
         TextureRegion reg;
         reg = regFeather;

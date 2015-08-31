@@ -16,7 +16,7 @@ public class Mountains extends AbstractGameObject {
         init();
     }
 
-    public void updateScrollPosition (Vector2 camPosition) {
+    public void updateScrollPosition(Vector2 camPosition) {
         position.set(camPosition.x, position.y);
     }
 
@@ -72,12 +72,12 @@ public class Mountains extends AbstractGameObject {
     }
 
     @Override
-    public void render (SpriteBatch batch) {
+    public void render(SpriteBatch batch) {
         // 80% distant mountains (dark gray)
         drawMountain(batch, 0.5f, 0.5f, 0.5f, 0.8f);
         // 50% distant mountains (gray)
         drawMountain(batch, 0.25f, 0.25f, 0.7f, 0.5f);
-            // 30% distant mountains (light gray)
+        // 30% distant mountains (light gray)
         drawMountain(batch, 0.0f, 0.0f, 0.9f, 0.3f);
     }
 }

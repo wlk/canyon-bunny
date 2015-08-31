@@ -20,20 +20,20 @@ public class WorldController extends InputAdapter {
     public Level level;
     public int lives;
     public int score;
+    public float livesVisual;
+    public float scoreVisual;
     private float timeLeftGameOverDelay;
     // Rectangles for collision detection
     private Rectangle r1 = new Rectangle();
     private Rectangle r2 = new Rectangle();
     private Game game;
-    public float livesVisual;
-    public float scoreVisual;
 
     public WorldController(Game game) {
         this.game = game;
         init();
     }
 
-    private void init () {
+    private void init() {
         Gdx.input.setInputProcessor(this);
         cameraHelper = new CameraHelper();
         lives = Constants.LIVES_START;
@@ -49,18 +49,18 @@ public class WorldController extends InputAdapter {
         cameraHelper.setTarget(level.bunnyHead);
     }
 
-    public void update (float deltaTime) {
+    public void update(float deltaTime) {
         handleDebugInput(deltaTime);
         if (isGameOver()) {
             timeLeftGameOverDelay -= deltaTime;
-            if (timeLeftGameOverDelay< 0) backToMenu();
+            if (timeLeftGameOverDelay < 0) backToMenu();
         } else {
             handleInputGame(deltaTime);
         }
         level.update(deltaTime);
         testCollisions();
         cameraHelper.update(deltaTime);
-        if (!isGameOver() &&isPlayerInWater()) {
+        if (!isGameOver() && isPlayerInWater()) {
             lives--;
             if (isGameOver())
                 timeLeftGameOverDelay = Constants.TIME_DELAY_GAME_OVER;
@@ -68,9 +68,9 @@ public class WorldController extends InputAdapter {
                 initLevel();
         }
         level.mountains.updateScrollPosition(cameraHelper.getPosition());
-        if (livesVisual> lives)
+        if (livesVisual > lives)
             livesVisual = Math.max(lives, livesVisual - 1 * deltaTime);
-        if (scoreVisual< score)
+        if (scoreVisual < score)
             scoreVisual = Math.min(score, scoreVisual + 250 * deltaTime);
     }
 

@@ -18,35 +18,12 @@ public class Level {
     public BunnyHead bunnyHead;
     public Array<GoldCoin> goldcoins;
     public Array<Feather> feathers;
-
-    public enum BLOCK_TYPE {
-        EMPTY(0, 0, 0), // black
-        ROCK(0, 255, 0), // green
-        PLAYER_SPAWNPOINT(255, 255, 255), // white
-        ITEM_FEATHER(255, 0, 255), // purple
-        ITEM_GOLD_COIN(255, 255, 0); // yellow
-        private int color;
-
-        BLOCK_TYPE(int r, int g, int b) {
-            color = r << 24 | g << 16 | b << 8 | 0xff;
-        }
-
-        public boolean sameColor(int color) {
-            return this.color == color;
-        }
-
-        public int getColor() {
-            return color;
-        }
-    }
-
     // objects
     public Array<Rock> rocks;
     // decoration
     public Clouds clouds;
     public Mountains mountains;
     public WaterOverlay waterOverlay;
-
     public Level(String filename) {
         init(filename);
     }
@@ -93,21 +70,21 @@ public class Level {
                 else if (BLOCK_TYPE.PLAYER_SPAWNPOINT.sameColor(currentPixel)) {
                     obj = new BunnyHead();
                     offsetHeight = -3.0f;
-                    obj.position.set(pixelX,baseHeight * obj.dimension.y + offsetHeight);
-                    bunnyHead = (BunnyHead)obj;
+                    obj.position.set(pixelX, baseHeight * obj.dimension.y + offsetHeight);
+                    bunnyHead = (BunnyHead) obj;
                 }
                 // feather
                 else if (BLOCK_TYPE.ITEM_FEATHER.sameColor(currentPixel)) {
                     obj = new Feather();
                     offsetHeight = -1.5f;
-                    obj.position.set(pixelX,baseHeight * obj.dimension.y + offsetHeight);
-                    feathers.add((Feather)obj);
+                    obj.position.set(pixelX, baseHeight * obj.dimension.y + offsetHeight);
+                    feathers.add((Feather) obj);
                 }
                 // gold coin
                 else if (BLOCK_TYPE.ITEM_GOLD_COIN.sameColor(currentPixel)) {
                     obj = new GoldCoin();
                     offsetHeight = -1.5f;
-                    obj.position.set(pixelX,baseHeight * obj.dimension.y + offsetHeight);
+                    obj.position.set(pixelX, baseHeight * obj.dimension.y + offsetHeight);
                     goldcoins.add((GoldCoin) obj);
                 }
                 // unknown object/pixel color
@@ -154,14 +131,35 @@ public class Level {
         clouds.render(batch);
     }
 
-    public void update (float deltaTime) {
+    public void update(float deltaTime) {
         bunnyHead.update(deltaTime);
-        for(Rock rock : rocks)
+        for (Rock rock : rocks)
             rock.update(deltaTime);
-        for(GoldCoin goldCoin : goldcoins)
+        for (GoldCoin goldCoin : goldcoins)
             goldCoin.update(deltaTime);
-        for(Feather feather : feathers)
+        for (Feather feather : feathers)
             feather.update(deltaTime);
         clouds.update(deltaTime);
+    }
+
+    public enum BLOCK_TYPE {
+        EMPTY(0, 0, 0), // black
+        ROCK(0, 255, 0), // green
+        PLAYER_SPAWNPOINT(255, 255, 255), // white
+        ITEM_FEATHER(255, 0, 255), // purple
+        ITEM_GOLD_COIN(255, 255, 0); // yellow
+        private int color;
+
+        BLOCK_TYPE(int r, int g, int b) {
+            color = r << 24 | g << 16 | b << 8 | 0xff;
+        }
+
+        public boolean sameColor(int color) {
+            return this.color == color;
+        }
+
+        public int getColor() {
+            return color;
+        }
     }
 }

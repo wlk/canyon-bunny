@@ -14,18 +14,13 @@ import com.packtpub.libgdx.canyonbunny.util.Constants;
 public class Assets implements Disposable, AssetErrorListener {
     public static final String TAG = Assets.class.getName();
     public static final Assets instance = new Assets();
-    private AssetManager assetManager;
     public AssetBunny bunny;
-
     public AssetRock rock;
-
     public AssetGoldCoin goldCoin;
-
     public AssetFeather feather;
-
     public AssetLevelDecoration levelDecoration;
-
     public AssetFonts fonts;
+    private AssetManager assetManager;
 
     // singleton: prevent instantiation from other classes
     private Assets() {
@@ -76,7 +71,8 @@ public class Assets implements Disposable, AssetErrorListener {
         public final BitmapFont defaultSmall;
         public final BitmapFont defaultNormal;
         public final BitmapFont defaultBig;
-        public AssetFonts () {
+
+        public AssetFonts() {
             // create three fonts using Libgdx's 15px bitmap font
             defaultSmall = new BitmapFont(Gdx.files.internal("images/arial-15.fnt"), true);
             defaultNormal = new BitmapFont(Gdx.files.internal("images/arial-15.fnt"), true);

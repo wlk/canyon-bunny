@@ -5,13 +5,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.packtpub.libgdx.canyonbunny.game.Assets;
 
 public class GoldCoin extends AbstractGameObject {
-    private TextureRegion regGoldCoin;
     public boolean collected;
+    private TextureRegion regGoldCoin;
 
-    public GoldCoin () {
+    public GoldCoin() {
         init();
     }
-    private void init () {
+
+    private void init() {
         dimension.set(0.5f, 0.5f);
         regGoldCoin = Assets.instance.goldCoin.goldCoin;
         // Set bounding box for collision detection
@@ -19,7 +20,7 @@ public class GoldCoin extends AbstractGameObject {
         collected = false;
     }
 
-    public void render (SpriteBatch batch) {
+    public void render(SpriteBatch batch) {
         if (collected) return;
         TextureRegion reg = null;
         reg = regGoldCoin;

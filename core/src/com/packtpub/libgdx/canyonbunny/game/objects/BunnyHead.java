@@ -1,13 +1,13 @@
 package com.packtpub.libgdx.canyonbunny.game.objects;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.packtpub.libgdx.canyonbunny.game.Assets;
 import com.packtpub.libgdx.canyonbunny.util.CharacterSkin;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 
 public class BunnyHead extends AbstractGameObject {
     public static final String TAG = BunnyHead.class.getName();
@@ -16,29 +16,17 @@ public class BunnyHead extends AbstractGameObject {
     private final float JUMP_TIME_MIN = 0.1f;
 
     private final float JUMP_TIME_OFFSET_FLYING = JUMP_TIME_MAX - 0.018f;
-
-    public enum VIEW_DIRECTION {LEFT, RIGHT}
-
-    public enum JUMP_STATE {
-        GROUNDED, FALLING, JUMP_RISING, JUMP_FALLING
-    }
-
-    private TextureRegion regHead;
     public VIEW_DIRECTION viewDirection;
-
     public float timeJumping;
-
     public JUMP_STATE jumpState;
-
     public boolean hasFeatherPowerup;
-
     public float timeLeftFeatherPowerup;
+    public ParticleEffect dustParticles = new ParticleEffect();
+    private TextureRegion regHead;
 
     public BunnyHead() {
         init();
     }
-
-    public ParticleEffect dustParticles = new ParticleEffect();
 
     public void init() {
         dimension.set(1, 1);
@@ -115,7 +103,7 @@ public class BunnyHead extends AbstractGameObject {
     }
 
     @Override
-    protected void updateMotionY (float deltaTime) {
+    protected void updateMotionY(float deltaTime) {
         switch (jumpState) {
             case GROUNDED:
                 jumpState = JUMP_STATE.FALLING;
@@ -144,7 +132,7 @@ public class BunnyHead extends AbstractGameObject {
                     velocity.y = terminalVelocity.y;
                 }
         }
-        if (jumpState != JUMP_STATE.GROUNDED){
+        if (jumpState != JUMP_STATE.GROUNDED) {
             dustParticles.allowCompletion();
             super.updateMotionY(deltaTime);
 
@@ -152,7 +140,7 @@ public class BunnyHead extends AbstractGameObject {
     }
 
     @Override
-    public void render (SpriteBatch batch) {
+    public void render(SpriteBatch batch) {
         TextureRegion reg;
 
         // Draw Particles
@@ -174,6 +162,12 @@ public class BunnyHead extends AbstractGameObject {
                 false);
         // Reset color to white
         batch.setColor(1, 1, 1, 1);
+    }
+
+    public enum VIEW_DIRECTION {LEFT, RIGHT}
+
+    public enum JUMP_STATE {
+        GROUNDED, FALLING, JUMP_RISING, JUMP_FALLING
     }
 
 }
