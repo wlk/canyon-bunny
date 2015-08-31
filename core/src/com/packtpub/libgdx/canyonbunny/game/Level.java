@@ -24,6 +24,7 @@ public class Level {
     public Clouds clouds;
     public Mountains mountains;
     public WaterOverlay waterOverlay;
+
     public Level(String filename) {
         init(filename);
     }
