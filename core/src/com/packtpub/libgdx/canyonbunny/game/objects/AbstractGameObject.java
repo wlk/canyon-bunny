@@ -49,7 +49,7 @@ public abstract class AbstractGameObject {
         }
     }
 
-    public void setAnimation (Animation animation) {
+    public void setAnimation(Animation animation) {
         this.animation = animation;
         stateTime = 0;
     }
