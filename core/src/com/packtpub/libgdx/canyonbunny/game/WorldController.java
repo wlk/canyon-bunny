@@ -5,7 +5,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.math.Rectangle;
 import com.packtpub.libgdx.canyonbunny.game.objects.BunnyHead;
 import com.packtpub.libgdx.canyonbunny.game.objects.Feather;
@@ -26,51 +25,60 @@ public class WorldController extends InputAdapter {
     private Rectangle r1 = new Rectangle();
     private Rectangle r2 = new Rectangle();
     private Game game;
+    public float livesVisual;
+    public float scoreVisual;
 
     public WorldController(Game game) {
         this.game = game;
         init();
     }
 
-    private void init() {
+    private void init () {
         Gdx.input.setInputProcessor(this);
         cameraHelper = new CameraHelper();
         lives = Constants.LIVES_START;
+        livesVisual = lives;
         timeLeftGameOverDelay = 0;
         initLevel();
     }
 
     private void initLevel() {
         score = 0;
+        scoreVisual = score;
         level = new Level(Constants.LEVEL_01);
         cameraHelper.setTarget(level.bunnyHead);
     }
 
-    public void update(float deltaTime) {
+    public void update (float deltaTime) {
         handleDebugInput(deltaTime);
         if (isGameOver()) {
             timeLeftGameOverDelay -= deltaTime;
-            if (timeLeftGameOverDelay < 0) backToMenu();
+            if (timeLeftGameOverDelay< 0) backToMenu();
         } else {
             handleInputGame(deltaTime);
         }
         level.update(deltaTime);
         testCollisions();
         cameraHelper.update(deltaTime);
-        if (!isGameOver() && isPlayerInWater()) {
+        if (!isGameOver() &&isPlayerInWater()) {
             lives--;
             if (isGameOver())
                 timeLeftGameOverDelay = Constants.TIME_DELAY_GAME_OVER;
             else
                 initLevel();
         }
+        level.mountains.updateScrollPosition(cameraHelper.getPosition());
+        if (livesVisual> lives)
+            livesVisual = Math.max(lives, livesVisual - 1 * deltaTime);
+        if (scoreVisual< score)
+            scoreVisual = Math.min(score, scoreVisual + 250 * deltaTime);
     }
 
     public boolean isGameOver() {
         return lives < 0;
     }
 
-    private void backToMenu () {
+    private void backToMenu() {
         // switch to menu screen
         game.setScreen(new MenuScreen(game));
     }

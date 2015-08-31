@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.packtpub.libgdx.canyonbunny.game.objects.AbstractGameObject;
 
 public class CameraHelper {
+    private final float FOLLOW_SPEED = 4.0f;
     private static final String TAG = CameraHelper.class.getName();
     private final float MAX_ZOOM_IN = 0.25f;
     private final float MAX_ZOOM_OUT = 10.0f;
@@ -20,6 +21,9 @@ public class CameraHelper {
 
     public void update(float deltaTime) {
         if (!hasTarget()) return;
+
+        position.lerp(target.position, FOLLOW_SPEED * deltaTime);
+
         position.x = target.position.x + target.origin.x;
         position.y = target.position.y + target.origin.y;
 
